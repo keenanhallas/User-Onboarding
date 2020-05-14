@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import * as yup from "yup";
+import axios from "axios";
 
 const formSchema = yup.object().shape({
     name: yup.string().required("You must enter your name."),
-    email: yup.string().email().required("You must enter an email address."),
+    email: yup.string().email("You must enter a valid email address.").required("You must enter an email address."),
     password: yup.string().min(6, "Your password must be at least 6 characters.").required("You must enter a password."),
     terms: yup.boolean().oneOf([true], "You must agree to the terms of service.")
 });
@@ -16,6 +17,13 @@ const Form = props => {
         terms: false
     });
 
+    const [errorState, setErrorState] = useState({
+        name: "",
+        email: "",
+        password: "",
+        terms: ""
+    });
+
     const handleChange = event => {
         const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
         setFormState({
@@ -26,13 +34,30 @@ const Form = props => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(formState);
         setFormState({
             name: "",
             email: "",
             password: "",
             terms: false
         });
+    }
+
+    const validate = event => {
+        event.persist();
+        yup.reach(formSchema, event.target.name)
+            .validate(event.target.value)
+            .then(valid => {
+                setErrorState({
+                    ...errorState,
+                    [event.target.name]: ""
+                });
+            })
+            .catch(err => {
+                setErrorState({
+                    ...errorState,
+                    [event.target.name]: err.errors[0]
+                });
+            });
     }
 
     return (
