@@ -9,14 +9,22 @@ const Form = props => {
     });
 
     const handleChange = event => {
+        const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
         setFormState({
             ...formState,
-            [event.target.name]: event.target.value
+            [event.target.name]: value
         });
     }
 
     const handleSubmit = event => {
         event.preventDefault();
+        console.log(formState);
+        setFormState({
+            name: "",
+            email: "",
+            password: "",
+            terms: false
+        });
     }
 
     return (
@@ -57,7 +65,7 @@ const Form = props => {
                     type="checkbox"
                     id="terms"
                     name="terms"
-                    value={formState.terms}
+                    checked={formState.terms}
                     onChange={handleChange}
                 />
             </label>
