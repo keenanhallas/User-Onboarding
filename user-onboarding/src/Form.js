@@ -11,8 +11,10 @@ const formSchema = yup.object().shape({
 });
 
 const Form = props => {
-    const ErrorMessage = styled.p`
+    const ErrorMessage = styled.span`
         color: red;
+        font-size: .75rem;
+        margin-left: 5px;
     `;
 
     const [formState, setFormState] = useState({
@@ -71,6 +73,7 @@ const Form = props => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <h2>Please enter your info</h2>
             <label htmlFor="name">
                 Name:
                 <input
@@ -82,6 +85,7 @@ const Form = props => {
                 />
                 {errorState.name ? <ErrorMessage>{errorState.name}</ErrorMessage> : null}
             </label>
+            <br />
             <label htmlFor="email">
                 Email:
                 <input
@@ -93,6 +97,7 @@ const Form = props => {
                 />
                 {errorState.email ? <ErrorMessage>{errorState.email}</ErrorMessage> : null}
             </label>
+            <br />
             <label htmlFor="password">
                 Password:
                 <input
@@ -104,6 +109,7 @@ const Form = props => {
                 />
                 {errorState.password ? <ErrorMessage>{errorState.password}</ErrorMessage> : null}
             </label>
+            <br />
             <label htmlFor="terms">
                 I agree to the terms of service
                 <input
@@ -113,8 +119,10 @@ const Form = props => {
                     checked={formState.terms}
                     onChange={handleChange}
                 />
-                {errorState.terms ? <ErrorMessage>{errorState.terms}</ErrorMessage> : null}
+                
             </label>
+            {errorState.terms ? <ErrorMessage>{errorState.terms}</ErrorMessage> : null}
+            <br />
             <button>Submit form</button>
         </form>
     );
