@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+import * as yup from "yup";
+
+const formSchema = yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(6, "").required(),
+    terms: yup.boolean().oneOf([true])
+});
 
 const Form = props => {
     const [formState, setFormState] = useState({
