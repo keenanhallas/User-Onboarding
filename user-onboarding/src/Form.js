@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as yup from "yup";
 import axios from "axios";
+import styled from "styled-components";
 
 const formSchema = yup.object().shape({
     name: yup.string().required("You must enter your name."),
@@ -10,6 +11,10 @@ const formSchema = yup.object().shape({
 });
 
 const Form = props => {
+    const ErrorMessage = styled.p`
+        color: red;
+    `;
+
     const [formState, setFormState] = useState({
         name: "",
         email: "",
@@ -75,7 +80,7 @@ const Form = props => {
                     value={formState.name}
                     onChange={handleChange}
                 />
-                {errorState.name ? <p>{errorState.name}</p> : null}
+                {errorState.name ? <ErrorMessage>{errorState.name}</ErrorMessage> : null}
             </label>
             <label htmlFor="email">
                 Email:
@@ -86,7 +91,7 @@ const Form = props => {
                     value={formState.email}
                     onChange={handleChange}
                 />
-                {errorState.email ? <p>{errorState.email}</p> : null}
+                {errorState.email ? <ErrorMessage>{errorState.email}</ErrorMessage> : null}
             </label>
             <label htmlFor="password">
                 Password:
@@ -97,7 +102,7 @@ const Form = props => {
                     value={formState.password}
                     onChange={handleChange}
                 />
-                {errorState.password ? <p>{errorState.password}</p> : null}
+                {errorState.password ? <ErrorMessage>{errorState.password}</ErrorMessage> : null}
             </label>
             <label htmlFor="terms">
                 I agree to the terms of service
@@ -108,7 +113,7 @@ const Form = props => {
                     checked={formState.terms}
                     onChange={handleChange}
                 />
-                {errorState.terms ? <p>{errorState.terms}</p> : null}
+                {errorState.terms ? <ErrorMessage>{errorState.terms}</ErrorMessage> : null}
             </label>
             <button>Submit form</button>
         </form>
