@@ -42,8 +42,13 @@ const Form = props => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(formState);
-        console.log(errorState);
+        axios.post("https://reqres.in/api/users", formState)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(err => {
+                console.log(err);
+            })
         setFormState({
             name: "",
             email: "",
@@ -55,6 +60,7 @@ const Form = props => {
     const validate = event => {
         event.persist();
         const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
+        // I think the above line is needed? It wasn't used in the lesson.
         yup.reach(formSchema, event.target.name)
             .validate(value)
             .then(valid => {
