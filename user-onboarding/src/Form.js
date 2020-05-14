@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import * as yup from "yup";
 
 const formSchema = yup.object().shape({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().min(6, "").required(),
-    terms: yup.boolean().oneOf([true])
+    name: yup.string().required("You must enter your name."),
+    email: yup.string().email().required("You must enter an email address."),
+    password: yup.string().min(6, "Your password must be at least 6 characters.").required("You must enter a password."),
+    terms: yup.boolean().oneOf([true], "You must agree to the terms of service.")
 });
 
 const Form = props => {
