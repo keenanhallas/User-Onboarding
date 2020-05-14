@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import axios from "axios";
 import styled from "styled-components";
@@ -31,6 +31,12 @@ const Form = props => {
         terms: ""
     });
 
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        console.log(users);
+    }, [users]);
+
     const handleChange = event => {
         validate(event);
         const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
@@ -45,6 +51,7 @@ const Form = props => {
         axios.post("https://reqres.in/api/users", formState)
             .then(response => {
                 console.log(response);
+                setUsers([...users, response.data]);
             })
             .catch(err => {
                 console.log(err);
