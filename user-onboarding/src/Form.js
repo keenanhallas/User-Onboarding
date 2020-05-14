@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import axios from "axios";
 import styled from "styled-components";
+import UserList from "./UserList";
 
 const formSchema = yup.object().shape({
     name: yup.string().required("You must enter your name."),
@@ -85,59 +86,63 @@ const Form = props => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Please enter your info</h2>
-            <label htmlFor="name">
-                Name:
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formState.name}
-                    onChange={handleChange}
-                />
-                {errorState.name ? <ErrorMessage>{errorState.name}</ErrorMessage> : null}
-            </label>
-            <br />
-            <label htmlFor="email">
-                Email:
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formState.email}
-                    onChange={handleChange}
-                />
-                {errorState.email ? <ErrorMessage>{errorState.email}</ErrorMessage> : null}
-            </label>
-            <br />
-            <label htmlFor="password">
-                Password:
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formState.password}
-                    onChange={handleChange}
-                />
-                {errorState.password ? <ErrorMessage>{errorState.password}</ErrorMessage> : null}
-            </label>
-            <br />
-            <label htmlFor="terms">
-                I agree to the terms of service
-                <input
-                    type="checkbox"
-                    id="terms"
-                    name="terms"
-                    checked={formState.terms}
-                    onChange={handleChange}
-                />
-                
-            </label>
-            {errorState.terms ? <ErrorMessage>{errorState.terms}</ErrorMessage> : null}
-            <br />
-            <button>Submit form</button>
-        </form>
+        <div>
+            <form onSubmit={handleSubmit}>
+                <h2>Please enter your info</h2>
+                <label htmlFor="name">
+                    Name:
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formState.name}
+                        onChange={handleChange}
+                    />
+                    {errorState.name ? <ErrorMessage>{errorState.name}</ErrorMessage> : null}
+                </label>
+                <br />
+                <label htmlFor="email">
+                    Email:
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formState.email}
+                        onChange={handleChange}
+                    />
+                    {errorState.email ? <ErrorMessage>{errorState.email}</ErrorMessage> : null}
+                </label>
+                <br />
+                <label htmlFor="password">
+                    Password:
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={formState.password}
+                        onChange={handleChange}
+                    />
+                    {errorState.password ? <ErrorMessage>{errorState.password}</ErrorMessage> : null}
+                </label>
+                <br />
+                <label htmlFor="terms">
+                    I agree to the terms of service
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        name="terms"
+                        checked={formState.terms}
+                        onChange={handleChange}
+                    />
+                    
+                </label>
+                {errorState.terms ? <ErrorMessage>{errorState.terms}</ErrorMessage> : null}
+                <br />
+                <button>Submit form</button>
+            </form>
+            <h3>Userlist:</h3>
+            <UserList users={users} />
+        </div>
     );
 }
 
