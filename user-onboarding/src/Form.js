@@ -25,6 +25,7 @@ const Form = props => {
     });
 
     const handleChange = event => {
+        validate(event);
         const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
         setFormState({
             ...formState,
@@ -34,6 +35,8 @@ const Form = props => {
 
     const handleSubmit = event => {
         event.preventDefault();
+        console.log(formState);
+        console.log(errorState);
         setFormState({
             name: "",
             email: "",
@@ -44,8 +47,9 @@ const Form = props => {
 
     const validate = event => {
         event.persist();
+        const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
         yup.reach(formSchema, event.target.name)
-            .validate(event.target.value)
+            .validate(value)
             .then(valid => {
                 setErrorState({
                     ...errorState,
@@ -71,6 +75,7 @@ const Form = props => {
                     value={formState.name}
                     onChange={handleChange}
                 />
+                {errorState.name ? <p>{errorState.name}</p> : null}
             </label>
             <label htmlFor="email">
                 Email:
@@ -81,6 +86,7 @@ const Form = props => {
                     value={formState.email}
                     onChange={handleChange}
                 />
+                {errorState.email ? <p>{errorState.email}</p> : null}
             </label>
             <label htmlFor="password">
                 Password:
@@ -91,6 +97,7 @@ const Form = props => {
                     value={formState.password}
                     onChange={handleChange}
                 />
+                {errorState.password ? <p>{errorState.password}</p> : null}
             </label>
             <label htmlFor="terms">
                 I agree to the terms of service
@@ -101,6 +108,7 @@ const Form = props => {
                     checked={formState.terms}
                     onChange={handleChange}
                 />
+                {errorState.terms ? <p>{errorState.terms}</p> : null}
             </label>
             <button>Submit form</button>
         </form>
