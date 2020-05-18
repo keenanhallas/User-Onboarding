@@ -14,4 +14,21 @@ describe("Tests for the Lambda Cypress Testing project", () => {
     it("Types a password into the password field", () => {
         cy.get('#password').type("password123");
     });
+
+    it("Checks the terms of service box", () => {
+        cy.get('#terms').check();
+    });
+
+    it("Tests the submit button", () => {
+        cy.get('button').click();
+    });
+
+    it("Checks that the new user was added to the userlist", () => {
+        cy.contains("Keenan Hallas - keenanhallas@gmail.com");
+    });
+
+    it("Checks for a vaidation error on an empty form", () => {
+        cy.get('#name').type("Keenan Hallas").clear();
+        cy.contains("You must enter your name.");
+    });
 });
