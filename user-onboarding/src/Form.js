@@ -39,12 +39,13 @@ const Form = props => {
     }, [users]);
 
     const handleChange = event => {
-        validate(event);
+        event.persist();
         const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
         setFormState({
             ...formState,
             [event.target.name]: value
         });
+        validate(event, value);
     }
 
     const handleSubmit = event => {
@@ -65,10 +66,7 @@ const Form = props => {
         });
     }
 
-    const validate = event => {
-        event.persist();
-        const value = event.target.type === "checkbox"? event.target.checked : event.target.value;
-        // I think the above line is needed? It wasn't used in the lesson.
+    const validate = (event, value) => {
         yup.reach(formSchema, event.target.name)
             .validate(value)
             .then(valid => {
@@ -80,7 +78,7 @@ const Form = props => {
             .catch(err => {
                 setErrorState({
                     ...errorState,
-                    [event.target.name]: err.errors[0]
+                    [event.target.name]: err.errors[0] //how does this work? console log it
                 });
             });
     }
